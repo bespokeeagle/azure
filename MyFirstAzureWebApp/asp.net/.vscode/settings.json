@@ -1,0 +1,5 @@
+{
+    "appService.preDeployTask": "publish-release",
+    "appService.deploySubpath": "bin/Release/net6.0/publish",
+    "appService.defaultWebAppToDeploy": "/subscriptions/c4a740ed-c442-4bcf-98d7-3a3df9480ee6/AppServices/subscriptions/c4a740ed-c442-4bcf-98d7-3a3df9480ee6/resourceGroups/app-service/providers/Microsoft.Web/sites/symbolkd"
+}

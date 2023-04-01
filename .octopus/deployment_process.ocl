@@ -3,6 +3,7 @@ step "install-terraform" {
 
     action {
         action_type = "Octopus.Script"
+        is_disabled = true
         properties = {
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
@@ -25,5 +26,42 @@ step "install-terraform" {
             Octopus.Action.Script.Syntax = "Bash"
         }
         worker_pool = "hosted-ubuntu"
+    }
+}
+
+step "plan-to-apply-a-terraform-template" {
+    condition = "Always"
+    name = "Plan to apply a Terraform template"
+    start_trigger = "StartWithPrevious"
+
+    action {
+        action_type = "Octopus.TerraformPlan"
+        is_required = true
+        properties = {
+            Octopus.Action.AzureAccount.Variable = "azure-symbol"
+            Octopus.Action.GoogleCloud.ImpersonateServiceAccount = "False"
+            Octopus.Action.GoogleCloud.UseVMServiceAccount = "True"
+            Octopus.Action.Package.DownloadOnTentacle = "False"
+            Octopus.Action.Package.FeedId = "git-azure"
+            Octopus.Action.Package.PackageId = "octopus-deploy-trial"
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptSource = "Package"
+            Octopus.Action.Terraform.AllowPluginDownloads = "True"
+            Octopus.Action.Terraform.AzureAccount = "True"
+            Octopus.Action.Terraform.GoogleCloudAccount = "False"
+            Octopus.Action.Terraform.ManagedAccount = "None"
+            Octopus.Action.Terraform.PlanJsonOutput = "False"
+            Octopus.Action.Terraform.RunAutomaticFileSubstitution = "False"
+        }
+        worker_pool = "hosted-ubuntu"
+
+        packages {
+            acquisition_location = "Server"
+            feed = "git-azure"
+            package_id = "octopus-deploy-trial"
+            properties = {
+                SelectionMode = "immediate"
+            }
+        }
     }
 }

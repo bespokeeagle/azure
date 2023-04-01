@@ -12,6 +12,7 @@ step "terraform-plan" {
             Octopus.Action.Package.DownloadOnTentacle = "False"
             Octopus.Action.Package.FeedId = "git-azure"
             Octopus.Action.Package.PackageId = "bespokeeagle/azure"
+            Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptSource = "Package"
             Octopus.Action.Terraform.AllowPluginDownloads = "True"
             Octopus.Action.Terraform.AzureAccount = "True"
@@ -21,7 +22,7 @@ step "terraform-plan" {
             Octopus.Action.Terraform.RunAutomaticFileSubstitution = "True"
             Octopus.Action.Terraform.TemplateDirectory = "AKS"
         }
-        worker_pool_variable = ""
+        worker_pool = "hosted-ubuntu"
 
         packages {
             acquisition_location = "Server"

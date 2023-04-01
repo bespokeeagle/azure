@@ -1,7 +1,0 @@
-/Users/symbolchimere/azure/bin/Release/net6.0/publish/azure
-/Users/symbolchimere/azure/bin/Release/net6.0/publish/appsettings.Development.json
-/Users/symbolchimere/azure/bin/Release/net6.0/publish/appsettings.json
-/Users/symbolchimere/azure/bin/Release/net6.0/publish/azure.dll
-/Users/symbolchimere/azure/bin/Release/net6.0/publish/azure.deps.json
-/Users/symbolchimere/azure/bin/Release/net6.0/publish/azure.runtimeconfig.json
-/Users/symbolchimere/azure/bin/Release/net6.0/publish/azure.pdb

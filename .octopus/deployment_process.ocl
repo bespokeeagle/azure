@@ -20,7 +20,6 @@ step "terraform-plan" {
             Octopus.Action.Terraform.ManagedAccount = "None"
             Octopus.Action.Terraform.PlanJsonOutput = "False"
             Octopus.Action.Terraform.RunAutomaticFileSubstitution = "True"
-            Octopus.Action.Terraform.TemplateDirectory = "AKS"
         }
         worker_pool = "hosted-ubuntu"
 

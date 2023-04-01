@@ -43,7 +43,7 @@ step "plan-to-apply-a-terraform-template" {
             Octopus.Action.GoogleCloud.UseVMServiceAccount = "True"
             Octopus.Action.Package.DownloadOnTentacle = "False"
             Octopus.Action.Package.FeedId = "git-azure"
-            Octopus.Action.Package.PackageId = "octopus-deploy-trial"
+            Octopus.Action.Package.PackageId = "bespokeeagle/azure"
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptSource = "Package"
             Octopus.Action.Terraform.AllowPluginDownloads = "True"
@@ -58,7 +58,7 @@ step "plan-to-apply-a-terraform-template" {
         packages {
             acquisition_location = "Server"
             feed = "git-azure"
-            package_id = "octopus-deploy-trial"
+            package_id = "bespokeeagle/azure"
             properties = {
                 SelectionMode = "immediate"
             }

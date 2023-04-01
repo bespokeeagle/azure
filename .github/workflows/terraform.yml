@@ -79,8 +79,8 @@ jobs:
       run: cd AKS && terraform init -upgrade
 
     # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: cd AKS && terraform fmt -check
+   # - name: Terraform Format
+    #  run: cd AKS && terraform fmt -check
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan

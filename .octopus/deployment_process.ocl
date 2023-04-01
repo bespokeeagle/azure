@@ -33,23 +33,3 @@ step "terraform-plan" {
         }
     }
 }
-
-step "plan-to-apply-a-terraform-template" {
-    name = "Plan to apply a Terraform template"
-
-    action {
-        action_type = "Octopus.TerraformPlan"
-        properties = {
-            Octopus.Action.GoogleCloud.ImpersonateServiceAccount = "False"
-            Octopus.Action.GoogleCloud.UseVMServiceAccount = "True"
-            Octopus.Action.Script.ScriptSource = "Inline"
-            Octopus.Action.Terraform.AllowPluginDownloads = "True"
-            Octopus.Action.Terraform.AzureAccount = "False"
-            Octopus.Action.Terraform.GoogleCloudAccount = "False"
-            Octopus.Action.Terraform.ManagedAccount = "None"
-            Octopus.Action.Terraform.PlanJsonOutput = "False"
-            Octopus.Action.Terraform.RunAutomaticFileSubstitution = "True"
-        }
-        worker_pool_variable = ""
-    }
-}

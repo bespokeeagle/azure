@@ -1,7 +1,7 @@
 # This workflow installs the latest version of Terraform CLI and configures the Terraform CLI configuration file
 # with an API token for Terraform Cloud (app.terraform.io). On pull request events, this workflow will run
 # `terraform init`, `terraform fmt`, and `terraform plan` (speculative plan via Terraform Cloud). On push events
-# to the "main" branch, `terraform apply` will be executed.
+# to the main branch, `terraform apply` will be executed.
 #
 # Documentation for `hashicorp/setup-terraform` is located here: https://github.com/hashicorp/setup-terraform
 #
@@ -96,17 +96,18 @@ jobs:
     - name: install kubectl
       run: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-      # On push to "main", build or change infrastructure according to Terraform configuration files
+      # On push to main, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/"main"'
+      if: ${{ github.ref == 'refs/heads/main' }}
       run: cd AKS && terraform apply -var="ssh_public_key=${{ secrets.ID_RSA_PUB }}" -var="aks_service_principal_app_id=${{ secrets.AKS_SERVICE_PRINCIPAL_APP_ID }}" -var="aks_service_principal_client_secret=${{ secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET }}" -auto-approve -input=false
 
     - name: kubectl config generate
-      if: github.ref == 'refs/heads/"main"'
+      if: ${{ github.ref == 'refs/heads/main' }}
       run: echo "$(terraform output kube_config)" > ./azurek8s
 
     - name: kubectl config save
+      if: ${{ github.ref == 'refs/heads/main' }}
       uses: actions/upload-artifact@v3
       with:
         name: kubeconfig

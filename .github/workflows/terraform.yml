@@ -116,7 +116,7 @@ jobs:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'kubectl'
     runs-on: ubuntu-latest
     environment: production
     defaults:

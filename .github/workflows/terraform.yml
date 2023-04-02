@@ -47,12 +47,13 @@ name: 'Terraform'
 on:
   push:
     branches: [ "*" ]
-    paths:
-      - 'AKS/**'
+    # paths:
+      # - 'AKS/**'
   pull_request:
 env:
   USERNAME: cf94d20e-f1a8-49c2-87e8-ec4d575c96d2
   TENANT: 59db3cb4-ec5d-42b5-9c11-579561ca8d78
+  SUB: c4a740ed-c442-4bcf-98d7-3a3df9480ee6
 permissions:
   contents: read
 
@@ -138,8 +139,12 @@ jobs:
     - name: install kubectl
       run: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
+    - name: az login
+      run: az login --service-principal -u ${{ env.USERNAME }} -p ${{ secrets.PASSWORD }} --tenant ${{ env.TENANT }}
+
     - name: apply kubectl config
-      run: echo "$(terraform output kube_config)" > ./azurek8s
+      run: az aks get-credentials --resource-group rg-close-sunfish --name rama
+    
     
     - name: check config
       run: cat ./azurek8s && export KUBECONFIG=./azurek8s

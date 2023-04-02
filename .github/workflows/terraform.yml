@@ -123,9 +123,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
   
-    - name: install kubectl
+    - name: download artifact
       uses: actions/download-artifact@v3
-        # with:
-          # name: kubeconfig
+        with:
+          name: kubeconfig
+          
+    - name: install kubectl
       run: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
   

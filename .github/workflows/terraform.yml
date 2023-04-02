@@ -163,6 +163,6 @@ jobs:
     - name: install consul
       run: |
         helm repo add hashicorp https://helm.releases.hashicorp.com
-        helm install consul hashicorp/consul -f config.yaml
+        helm install consul hashicorp/consul -f consul/config.yaml
         
   

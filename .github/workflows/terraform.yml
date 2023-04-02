@@ -111,11 +111,7 @@ jobs:
       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: echo "$(terraform output kube_config)" > ./azurek8s
 
-
-
-
-jobs:
-  terraform:
+  kubectl:
     name: 'kubectl'
     runs-on: ubuntu-latest
     environment: production
@@ -129,7 +125,7 @@ jobs:
   
     - name: install kubectl
       uses: actions/download-artifact@v3
-        # with:
-          # name: kubeconfig
+        with:
+          name: kubeconfig
       run: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
   

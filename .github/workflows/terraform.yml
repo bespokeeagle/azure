@@ -48,7 +48,9 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-
+env:
+  USERNAME: cf94d20e-f1a8-49c2-87e8-ec4d575c96d2
+  TENANT: 59db3cb4-ec5d-42b5-9c11-579561ca8d78
 permissions:
   contents: read
 

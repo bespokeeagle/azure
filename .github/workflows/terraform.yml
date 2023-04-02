@@ -82,10 +82,6 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      on:
-        push:
-          paths:
-            - '**.js'
       run: cd AKS && terraform init -upgrade
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -94,10 +90,6 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      on:
-        push:
-          paths:
-            - '**.js'
       run: cd AKS && terraform plan -var="ssh_public_key=${{ secrets.ID_RSA_PUB }}" -var="aks_service_principal_app_id=${{ secrets.AKS_SERVICE_PRINCIPAL_APP_ID }}" -var="aks_service_principal_client_secret=${{ secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET }}" -input=false
 
     # install kubectl
@@ -107,9 +99,37 @@ jobs:
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
-      on:
-        push:
-          paths:
-            - '**.js'
       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: cd AKS && terraform apply -var="ssh_public_key=${{ secrets.ID_RSA_PUB }}" -var="aks_service_principal_app_id=${{ secrets.AKS_SERVICE_PRINCIPAL_APP_ID }}" -var="aks_service_principal_client_secret=${{ secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET }}" -auto-approve -input=false
+
+    - name: Kubectl Config
+      uses: actions/upload-artifact@v3
+      with:
+          name: kubeconfig
+          path: ./azurek8s
+          retention-days: 1
+      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+      run: echo "$(terraform output kube_config)" > ./azurek8s
+
+
+
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        shell: bash
+    steps:
+    # Checkout the repository t
+    - name: Checkout
+      uses: actions/checkout@v3
+  
+    - name: install kubectl
+      uses: actions/download-artifact@v3
+        with:
+          name: kubeconfig
+      run: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+  

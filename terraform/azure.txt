@@ -1,0 +1,16 @@
+[
+  {
+    "cloudName": "AzureCloud",
+    "homeTenantId": "59db3cb4-ec5d-42b5-9c11-579561ca8d78",
+    "id": "c4a740ed-c442-4bcf-98d7-3a3df9480ee6",
+    "isDefault": true,
+    "managedByTenants": [],
+    "name": "Azure subscription Learning",
+    "state": "Enabled",
+    "tenantId": "59db3cb4-ec5d-42b5-9c11-579561ca8d78",
+    "user": {
+      "name": "symbolchimere@gmail.com",
+      "type": "user"
+    }
+  }
+]

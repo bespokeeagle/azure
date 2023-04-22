@@ -143,7 +143,7 @@ jobs:
       run: az login --service-principal -u ${{ env.USERNAME }} -p ${{ secrets.PASSWORD }} --tenant ${{ env.TENANT }}
 
     - name: apply kubectl config
-      run: az aks get-credentials --resource-group rg-close-sunfish --name rama
+      run: az aks get-credentials --resource-group rg-rama --name rama
     
     
     # - name: check config
@@ -163,6 +163,6 @@ jobs:
     - name: install consul
       run: |
         helm repo add hashicorp https://helm.releases.hashicorp.com
-        helm install consul hashicorp/consul -f AKS/consul/config.yaml
+        helm install --values helm/values-v1.yaml consul hashicorp/consul --create-namespace --namespace consul --version "1.0.2"
         
   

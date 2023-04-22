@@ -30,3 +30,10 @@ ui:
 # Configures and installs the automatic Consul Connect sidecar injector.
 connectInject:
   enabled: true
+  default: true
+controller:
+  enabled: true
+client:
+  enabled: true
+  # enable grpc on your client to support consul connect
+  grpc: true
